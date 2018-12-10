@@ -1,0 +1,73 @@
+.header {
+	padding: 30px 0;
+	background-color: antiquewhite;
+}
+
+.container {
+	margin-top: 2rem;
+}
+
+.header, h3, h4 {
+	text-align: center;
+}
+
+.logo {
+	margin-bottom: 10px;
+}
+
+.ingredients {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-bottom: 20px;
+}
+
+.ingredients > * {
+	margin: 3px;
+	padding: 20px;
+	background-color: gainsboro;
+	flex-grow: 1;
+}
+
+.submitTaco {
+	margin-top: 40px;
+	display: flex;
+	justify-content: center;
+}
+
+.tacoName {
+	position: absolute;
+	width: auto !important;
+	margin-left: 20px;
+}
+
+.invalid-input {
+	font-size: .75rem;
+	color: #e42c2c;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

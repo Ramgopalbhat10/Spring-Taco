@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="ISO-8859-1">
+	<title>Your Taco Order</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  	<link rel="stylesheet" th:href="@{/css/styles.css}">
+  </head>
+  <body>
+	<div class="main">
+	  <h1 class="header">Welcome to Taco Cloud <span><img class="logo" th:src="@{/images/taco-logo.png}"/></span></h1>
+	  <div class="container">
+	    <div style="display:flex; justify-content: space-between; align-items:center; max-width:750px; margin:auto">
+	      <h3 style="margin-bottom:20px;">Order your Taco creations!</h3>
+	      <a th:href="@{/design}">design another Taco</a>
+	    </div>
+	  	<form style="max-width:750px; margin:auto" method="POST" th:action="@{/orders}" th:object="${order}">
+	  	  <div style="max-width:750px; margin:auto" th:if="${#fields.hasErrors()}">
+	  	    <script type="text/javascript">console.log("has errors")</script>
+	        <div class="alert alert-danger" role="alert">
+	          Please correct the problems below and resubmit
+	        </div>
+	      </div>
+	  	  <div class="form-row orderSubmitForm">
+	  	    <div class="form-group col-md-6">
+	  	      <label for="firstName">First Name</label>
+	  	      <input type="text" class="form-control" th:field="*{firstName}" placeholder="First Name"/>
+	  	      <span class="invalid-input" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Name Error</span>
+	  	    </div>
+	  	    <div class="form-group col-md-6">
+	  	      <label for="lastName">Last Name</label>
+	  	      <input type="text" class="form-control" th:field="*{lastName}" placeholder="Last Name"/>
+	  	      <span class="invalid-input" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name Error</span>
+	  	    </div>
+	  	  </div>
+	  	  <div class="form-group">
+	  	    <label for="street">Street</label>
+	  	    <input type="text" class="form-control" th:field="*{street}" placeholder="1234 Main St"/>
+	  	    <span class="invalid-input" th:if="${#fields.hasErrors('street')}" th:errors="*{street}">Street Error</span>
+	  	  </div>
+	  	  <div class="form-row">
+	  	    <div class="form-group col-md-6">
+	  	      <label for="city">City</label>
+	  	      <input type="text" class="form-control" th:field="*{city}" placeholder="Bangalore"/>
+	  	      <span class="invalid-input" th:if="${#fields.hasErrors('city')}" th:errors="*{city}">City Error</span>
+	  	    </div>
+	  	    <div class="form-group col-md-4">
+	  	      <label for="state">State</label>
+	  	      <input type="text" class="form-control" th:field="*{state}" placeholder="Karnataka"/>
+	  	      <span class="invalid-input" th:if="${#fields.hasErrors('state')}" th:errors="*{state}">State Error</span>
+	  	    </div>
+	  	    <div class="form-group col-md-2">
+	  	      <label for="zip">Zip</label>
+	  	      <input type="text" class="form-control" th:field="*{zip}" placeholder="560073"/>
+	  	      <span class="invalid-input" th:if="${#fields.hasErrors('zip')}" th:errors="*{zip}">Zip Error</span>
+	  	    </div>
+	  	  </div>
+	  	  <div class="form-row">
+	  	    <div class="form-group col-md-6">
+	  	      <label for="ccNumber">Card Number</label>
+	  	      <input type="text" class="form-control" th:field="*{ccNumber}" placeholder="- - - -   - - - -   - - - -   - - - -"/>
+	  	      <span class="invalid-input" th:if="${#fields.hasErrors('ccNumber')}" th:errors="*{ccNumber}">Card Error</span>
+	  	    </div>
+	  	    <div class="form-group col-md-4">
+	  	      <label for="ccExpiration">Expiry Date</label>
+	  	      <input type="text" class="form-control" th:field="*{ccExpiration}" placeholder="-- / --"/>
+	  	      <span class="invalid-input" th:if="${#fields.hasErrors('ccExpiration')}" th:errors="*{ccExpiration}">Expiry Error</span>
+	  	    </div>
+	  	    <div class="form-group col-md-2">
+	  	      <label for="ccCvv">CVV</label>
+	  	      <input type="text" class="form-control" th:field="*{ccCvv}" placeholder="***"/>
+	  	      <span class="invalid-input" th:if="${#fields.hasErrors('ccCvv')}" th:errors="*{ccCvv}">CVV Error</span>
+	  	    </div>
+	  	  </div>
+	  	  <button type="submit" class="btn btn-primary">Submit order</button>
+	  	</form>
+	  	</div>
+	  </div>
+  </body>
+</html>

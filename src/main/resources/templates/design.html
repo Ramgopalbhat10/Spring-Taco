@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Taco Cloud</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+  </head>
+
+  <body>
+    <div class="main">
+      <h1 class="header">Welcome to Taco Cloud <span><img class="logo" th:src="@{/images/taco-logo.png}"/></span></h1>
+      <div class="container">
+      	<h3 style="margin-bottom:20px;">Design your Taco</h3>
+      	<form method="POST" th:object="${taco}" >
+      	  <div th:if="${#fields.hasErrors('ingredients')}">
+      	    <script type="text/javascript">console.log("has errors")</script>
+	        <div class="alert alert-danger" role="alert">
+	          Please correct the problems below and name
+	        </div>
+	      </div>
+      	  <div th:if="${#fields.hasErrors('ingredients')}" th:errors="*{ingredients}">
+      	    Ingredients Error 
+      	  </div>
+      	  <div  class="ingredients">
+      	    <div class="wraps ingredient">
+      	      <h5>Select your Wrap</h5>
+              <div class="form-check">
+      	  	    <div th:each="ingredient : ${wrap}">
+      	          <input class="form-check-input" name="ingredients1" type="checkbox" value="${ingredient.id}" id="defaultCheck1" th:field="*{ingredients}"/>
+      	          <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
+      	  	    </div>
+              </div>
+            </div>
+            <div class="protiens ingredient">
+      	      <h5>Pick your Protein</h5>
+              <div class="form-check">
+      	  	    <div th:each="ingredient : ${protein}">
+      	          <input class="form-check-input" name="ingredients2" type="checkbox" value="${ingredient.id}" id="defaultCheck2" th:field="*{ingredients}"/>
+      	          <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
+      	  	    </div>
+              </div>
+            </div>
+            <div class="cheeses ingredient">
+      	      <h5>Choose your Cheese</h5>
+              <div class="form-check">
+      	  	    <div th:each="ingredient : ${cheese}">
+      	          <input class="form-check-input" name="ingredients3" type="checkbox" value="${ingredient.id}" id="defaultCheck3" th:field="*{ingredients}"/>
+      	          <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
+      	  	    </div>
+              </div>
+            </div>
+            <div class="veggies ingredient">
+      	      <h5>Determine your Veggies</h5>
+              <div class="form-check">
+      	  	    <div th:each="ingredient : ${veggies}">
+      	          <input class="form-check-input" name="ingredients4" type="checkbox" value="${ingredient.id}" id="defaultCheck4" th:field="*{ingredients}"/>
+      	          <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
+      	  	    </div>
+              </div>
+            </div>
+            <div class="sauces ingredient">
+      	      <h5>Select your Sauce</h5>
+              <div class="form-check">
+      	  	    <div th:each="ingredient : ${sauce}">
+      	          <input class="form-check-input" name="ingredients5" type="checkbox" value="${ingredient.id}" id="defaultCheck5" th:field="*{ingredients}"/>
+      	          <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
+      	  	    </div>
+              </div>
+            </div>
+          </div>
+          <div class="submitTaco form-inline">
+          	<h5 style="margin: .5rem !important;">Name your Taco creation</h5>
+          	<div>
+          	  <input class="form-control tacoInput" type="text" th:field="*{name}" />
+          	  <div class="invalid-input tacoName" th:if="${#fields.hasErrors()}">
+        	    Provide a name
+      		  </div>
+          	</div>
+          	<button type="submit" class="btn btn-primary m-2">Confirm identity</button>
+          </div>
+        </form>
+      </div>
+    </div> 
+  </body>
+</html>
