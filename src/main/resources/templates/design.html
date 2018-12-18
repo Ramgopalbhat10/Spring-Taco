@@ -26,8 +26,8 @@
       	    <div class="wraps ingredient">
       	      <h5>Select your Wrap</h5>
               <div class="form-check">
-      	  	    <div th:each="ingredient : ${wrap}">
-      	          <input class="form-check-input" name="ingredients1" type="checkbox" value="${ingredient.id}" id="defaultCheck1" th:field="*{ingredients}"/>
+      	  	    <div th:each="ingredient, item : ${wrap}">
+      	          <input class="form-check-input" th:name="${ingredient.name}" type="checkbox" th:value="${ingredient.id}" id="defaultCheck1" th:field="*{ingredients}"/>
       	          <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
       	  	    </div>
               </div>
@@ -36,7 +36,7 @@
       	      <h5>Pick your Protein</h5>
               <div class="form-check">
       	  	    <div th:each="ingredient : ${protein}">
-      	          <input class="form-check-input" name="ingredients2" type="checkbox" value="${ingredient.id}" id="defaultCheck2" th:field="*{ingredients}"/>
+      	          <input class="form-check-input" th:name="${ingredient.name}" type="checkbox" th:value="${ingredient.id}" id="defaultCheck2" th:field="*{ingredients}"/>
       	          <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
       	  	    </div>
               </div>
@@ -45,7 +45,7 @@
       	      <h5>Choose your Cheese</h5>
               <div class="form-check">
       	  	    <div th:each="ingredient : ${cheese}">
-      	          <input class="form-check-input" name="ingredients3" type="checkbox" value="${ingredient.id}" id="defaultCheck3" th:field="*{ingredients}"/>
+      	          <input class="form-check-input" th:name="${ingredient.name}" type="checkbox" th:value="${ingredient.id}" id="defaultCheck3" th:field="*{ingredients}"/>
       	          <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
       	  	    </div>
               </div>
@@ -54,7 +54,7 @@
       	      <h5>Determine your Veggies</h5>
               <div class="form-check">
       	  	    <div th:each="ingredient : ${veggies}">
-      	          <input class="form-check-input" name="ingredients4" type="checkbox" value="${ingredient.id}" id="defaultCheck4" th:field="*{ingredients}"/>
+      	          <input class="form-check-input" th:name="${ingredient.name}" type="checkbox" th:value="${ingredient.id}" id="defaultCheck4" th:field="*{ingredients}"/>
       	          <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
       	  	    </div>
               </div>
@@ -63,7 +63,7 @@
       	      <h5>Select your Sauce</h5>
               <div class="form-check">
       	  	    <div th:each="ingredient : ${sauce}">
-      	          <input class="form-check-input" name="ingredients5" type="checkbox" value="${ingredient.id}" id="defaultCheck5" th:field="*{ingredients}"/>
+      	          <input class="form-check-input" th:name="${ingredient.name}" type="checkbox" th:value="${ingredient.id}" id="defaultCheck5" th:field="*{ingredients}"/>
       	          <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
       	  	    </div>
               </div>

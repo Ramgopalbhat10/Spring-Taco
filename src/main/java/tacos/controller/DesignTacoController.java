@@ -27,7 +27,7 @@ import tacos.domain.Taco;
 @Slf4j
 @Controller
 @RequestMapping("/design")
-@SessionAttributes("/order")
+@SessionAttributes("order")
 public class DesignTacoController {
 
   private final JdbcIngredientRepo ingredientRepo;

@@ -1,57 +1,55 @@
 package tacos.data;
 
-import java.sql.Timestamp;
-import java.sql.Types;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import tacos.domain.Ingredient;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import tacos.domain.Taco;
 
 @Repository
 public class JdbcTacoRepo implements TacoRepo {
 
-  private JdbcTemplate jdbc;
+  private SimpleJdbcInsert tacoInserter;
+  private SimpleJdbcInsert tacoIngredientInserter;
+  private ObjectMapper objectMapper;
 
   @Autowired
   public JdbcTacoRepo(JdbcTemplate jdbc) {
-    this.jdbc = jdbc;
+    this.tacoInserter = new SimpleJdbcInsert(jdbc).withTableName("Taco").usingGeneratedKeyColumns("id");
+    this.tacoIngredientInserter = new SimpleJdbcInsert(jdbc).withTableName("Taco_Ingredients");
+    this.objectMapper = new ObjectMapper();
   }
 
   @Override
   public Taco save(Taco taco) {
+    taco.setCreatedAt(new Date());
     long tacoId = saveTacoInfo(taco);
     taco.setId(tacoId);
-    for (Ingredient ingredient : taco.getIngredients()) {
+    for (String ingredient : taco.getIngredients()) {
       saveIngredientToTaco(tacoId, ingredient);
     }
-    return null;
+    return taco;
   }
 
-  private void saveIngredientToTaco(long tacoId, Ingredient ingredient) {
-    jdbc.update("inset into Taco_Ingredients (taco, ingredient) values (?, ?)", tacoId, ingredient.getId());
+  private void saveIngredientToTaco(long tacoId, String ingredient) {
+    Map<String, Object> values = new HashMap<>();
+    values.put("taco", tacoId);
+    values.put("ingredient", ingredient);
+    tacoIngredientInserter.execute(values);
   }
 
   private long saveTacoInfo(Taco taco) {
-
-    taco.setCreatedAt(new Date());
-
-    PreparedStatementCreator psc = new PreparedStatementCreatorFactory(
-        "insert into Taco (name, createdAt) values (?, ?)", Types.VARCHAR, Types.TIMESTAMP)
-            .newPreparedStatementCreator(Arrays.asList(taco.getName(), new Timestamp(taco.getCreatedAt().getTime())));
-
-    KeyHolder keyHolder = new GeneratedKeyHolder();
-    jdbc.update(psc, keyHolder);
-
-    return keyHolder.getKey().longValue();
+    @SuppressWarnings("unchecked")
+    Map<String, Object> values = objectMapper.convertValue(taco, Map.class);
+    values.put("createdAt", taco.getCreatedAt());
+    return tacoInserter.executeAndReturnKey(values).longValue();
   }
 
 }
