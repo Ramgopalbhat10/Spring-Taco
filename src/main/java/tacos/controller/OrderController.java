@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import lombok.extern.slf4j.Slf4j;
-import tacos.data.OrderRepo;
+import tacos.data.OrderRepoJPA;
 import tacos.domain.Order;
 
 @Slf4j
@@ -22,16 +22,15 @@ import tacos.domain.Order;
 @SessionAttributes("order")
 public class OrderController {
 
-  private OrderRepo orderRepo;
+  private OrderRepoJPA orderRepo;
 
   @Autowired
-  public OrderController(OrderRepo orderRepo) {
+  public OrderController(OrderRepoJPA orderRepo) {
     this.orderRepo = orderRepo;
   }
 
   @GetMapping("/current")
   public String orderForm(Model model) {
-    model.addAttribute("order", new Order());
     return "orderForm";
   }
 

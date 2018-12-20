@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import lombok.extern.slf4j.Slf4j;
-import tacos.data.JdbcIngredientRepo;
-import tacos.data.JdbcTacoRepo;
+import tacos.data.IngredientRepoJPA;
+import tacos.data.TacoRepoJPA;
 import tacos.domain.Ingredient;
 import tacos.domain.Ingredient.Type;
 import tacos.domain.Order;
@@ -30,12 +30,12 @@ import tacos.domain.Taco;
 @SessionAttributes("order")
 public class DesignTacoController {
 
-  private final JdbcIngredientRepo ingredientRepo;
+  private final IngredientRepoJPA ingredientRepo;
 
-  private JdbcTacoRepo tacoRepo;
+  private TacoRepoJPA tacoRepo;
 
   @Autowired
-  public DesignTacoController(JdbcIngredientRepo ingredientRepo, JdbcTacoRepo tacoRepo) {
+  public DesignTacoController(IngredientRepoJPA ingredientRepo, TacoRepoJPA tacoRepo) {
     this.ingredientRepo = ingredientRepo;
     this.tacoRepo = tacoRepo;
   }
@@ -82,7 +82,7 @@ public class DesignTacoController {
     }
 
     Taco saved = tacoRepo.save(taco);
-    order.addDesign(taco);
+    order.addDesign(saved);
 
     return "redirect:/orders/current";
   }

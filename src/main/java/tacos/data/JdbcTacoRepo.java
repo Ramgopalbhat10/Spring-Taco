@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import tacos.domain.Ingredient;
 import tacos.domain.Taco;
 
 @Repository
@@ -32,16 +33,16 @@ public class JdbcTacoRepo implements TacoRepo {
     taco.setCreatedAt(new Date());
     long tacoId = saveTacoInfo(taco);
     taco.setId(tacoId);
-    for (String ingredient : taco.getIngredients()) {
+    for (Ingredient ingredient : taco.getIngredients()) {
       saveIngredientToTaco(tacoId, ingredient);
     }
     return taco;
   }
 
-  private void saveIngredientToTaco(long tacoId, String ingredient) {
+  private void saveIngredientToTaco(long tacoId, Ingredient ingredient) {
     Map<String, Object> values = new HashMap<>();
     values.put("taco", tacoId);
-    values.put("ingredient", ingredient);
+    values.put("ingredient", ingredient.getId());
     tacoIngredientInserter.execute(values);
   }
 
